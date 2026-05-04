@@ -1,0 +1,7 @@
+[project]
+name = "azerbaijanjobsanalysis"
+version = "0.1.0"
+description = "Analysis of job market in Azerbaijan"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
