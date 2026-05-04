@@ -4,4 +4,16 @@ version = "0.1.0"
 description = "Analysis of job market in Azerbaijan"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "poethepoet>=0.45.0",
+    "requests>=2.33.1",
+    "ruff>=0.15.12",
+    "urllib3>=2.6.3",
+]
+
+
+[tool.poe.tasks]
+lint = "uv run ruff check --fix"
+format = "uv run ruff format"
+precommit = ["lint", "format"]
+scrape = "uv run scraper.py"
