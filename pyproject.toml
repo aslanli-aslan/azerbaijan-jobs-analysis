@@ -5,6 +5,8 @@ description = "Analysis of job market in Azerbaijan"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "ipykernel>=7.2.0",
+    "pandas>=3.0.3",
     "poethepoet>=0.45.0",
     "requests>=2.33.1",
     "ruff>=0.15.12",
