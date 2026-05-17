@@ -16,4 +16,7 @@ dependencies = [
 lint = "uv run ruff check --fix"
 format = "uv run ruff format"
 precommit = ["lint", "format"]
-scrape = "uv run scraper.py"
+scrape = "uv run scraper/scraper.py"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -4,6 +4,8 @@ jobsearch.az vacancy scraper
 - Parallel page fetching + parallel detail fetching
 - Retry logic with exponential back-off
 - Safe to run daily via cron / Task Scheduler
+
+Implemented
 """
 
 import logging
@@ -16,6 +18,8 @@ from urllib3.util.retry import Retry
 
 import requests
 from requests.adapters import HTTPAdapter
+
+from jobanalysis.paths import RAW_DATA
 
 # ---------------------------------------------------------------------------
 # Config
@@ -38,7 +42,6 @@ HEADERS = {
 MAX_WORKERS = 20  # parallel detail fetches
 PAGE_WORKERS = 5  # parallel listing-page fetches
 TIMEOUT = 10  # seconds per request
-DB_PATH = Path("vacancies.db")
 
 
 # ---------------------------------------------------------------------------
@@ -112,7 +115,7 @@ CREATE TABLE IF NOT EXISTS vacancies (
 
 
 @contextlib.contextmanager
-def get_db(path: Path = DB_PATH):
+def get_db(path: Path = RAW_DATA):
     conn = sqlite3.connect(path)
     conn.execute("PRAGMA journal_mode=WAL;")  # better concurrency
     conn.execute(CREATE_SQL)
@@ -252,7 +255,7 @@ def fetch_details_parallel(slugs: list[str]) -> list[dict]:
 # Entry point
 # ---------------------------------------------------------------------------
 def main() -> None:
-    log.info("Starting scraper. DB: %s", DB_PATH.resolve())
+    log.info("Starting scraper. DB: %s", RAW_DATA.resolve())
 
     with get_db() as conn:
         known = existing_ids(conn)
