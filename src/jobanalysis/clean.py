@@ -2,6 +2,7 @@ import pandas as pd
 from jobanalysis.paths import RAW_DATA, PROCESSED_DATA
 from jobanalysis.io import load, save
 
+
 def parse_salary(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
@@ -9,6 +10,7 @@ def parse_salary(df: pd.DataFrame) -> pd.DataFrame:
     df["salary"] = df["salary"].replace(0, float("nan"))
 
     return df
+
 
 def parse_dates(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
@@ -19,6 +21,7 @@ def parse_dates(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
 def parse_company(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
@@ -26,12 +29,16 @@ def parse_company(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
 def parse_view_count(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
-    df["view_count"] = df["view_count"].apply(lambda x: int(float(x[:-1]) * 1000) if (isinstance(x, str) and 'K' in x) else x)
+    df["view_count"] = df["view_count"].apply(
+        lambda x: int(float(x[:-1]) * 1000) if (isinstance(x, str) and "K" in x) else x
+    )
 
     return df
+
 
 def clean(save_output: bool = True) -> pd.DataFrame:
     df = load(RAW_DATA)
@@ -46,6 +53,6 @@ def clean(save_output: bool = True) -> pd.DataFrame:
 
     return df
 
+
 if __name__ == "__main__":
     clean()
-
