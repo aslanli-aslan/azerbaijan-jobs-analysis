@@ -3,4 +3,5 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent.parent
 
 RAW_DATA = ROOT / "data/raw/vacancies.db"
-PROCESSED_DATA = ROOT / "data/processed/vacancies.db"
+CLEAN_DATA = ROOT / "data/processed/clean_vacancies.db"
+FINAL_DATA = ROOT / "data/processed/final_vacancies.db"

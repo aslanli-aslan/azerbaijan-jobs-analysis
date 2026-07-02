@@ -1,5 +1,5 @@
 import pandas as pd
-from jobanalysis.paths import RAW_DATA, PROCESSED_DATA
+from jobanalysis.paths import RAW_DATA, CLEAN_DATA
 from jobanalysis.io import load, save
 
 
@@ -8,6 +8,7 @@ def parse_salary(df: pd.DataFrame) -> pd.DataFrame:
 
     df["salary"] = df["salary"].astype(int)
     df["salary"] = df["salary"].replace(0, float("nan"))
+    df = df[((df["salary"] >= 100) & (df["salary"] <= 30000))]
 
     return df
 
@@ -113,6 +114,12 @@ def normalize_category(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def drop_columns(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+
+    df = df.drop(columns=["id", "company_id", "url", "fetched_at", "direct_apply"])
+
+    return df
 
 def clean(save_output: bool = True) -> pd.DataFrame:
     df = load(RAW_DATA)
@@ -121,10 +128,10 @@ def clean(save_output: bool = True) -> pd.DataFrame:
     df = parse_company(df)
     df = parse_view_count(df)
     df = normalize_category(df)
-    df = df.drop(columns=["id", "company_id", "url", "fetched_at", "direct_apply"])
+    df = drop_columns(df)
 
     if save_output:
-        save(df, PROCESSED_DATA)
+        save(df, CLEAN_DATA)
 
     return df
 
