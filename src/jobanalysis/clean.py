@@ -8,7 +8,7 @@ def parse_salary(df: pd.DataFrame) -> pd.DataFrame:
 
     df["salary"] = df["salary"].astype(int)
     df["salary"] = df["salary"].replace(0, float("nan"))
-    df = df[((df["salary"] >= 100) & (df["salary"] <= 30000))]
+    df = df[(((df["salary"] >= 100) & (df["salary"] <= 30000)) | df["salary"].isna())]
 
     return df
 
