@@ -2,6 +2,9 @@ import pandas as pd
 import re
 import unicodedata
 
+from jobanalysis.paths import CLEAN_DATA, FINAL_DATA
+from jobanalysis.io import load, save
+
 
 def extract_experience(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
@@ -93,3 +96,42 @@ def extract_education(df: pd.DataFrame) -> pd.DataFrame:
         _extract_education_from_description
     )
     return df
+
+def extract_languages(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+
+    AZERBAIJANI_PATTERN = r"Azərbaycan.*\sdil| dil.*Azərbaycan| dil bil[\s\S]*Azərbaycan|Azərbaycanca|Azerbaijani|азербайджанского.*языков|[əöğşç]"
+    ENGLISH_PATTERN = r"Ingilis.*\sdil| dil.*İngilis| dil bil[\s\S]*Ingilis|İngiliscə|English|\b(the|and|with|this|that|your)\b"
+    RUSSIAN_PATTERN = r"Rus.*\sdil| dil.*Rus| dil bil[\s\S]*Rus|Rusca|Russian|русского.*языков|[а-яА-ЯёЁ]"
+
+    def _extract_languages_from_description(text):
+        required_languages = []
+        if re.search(AZERBAIJANI_PATTERN, text, re.IGNORECASE):
+            required_languages.append("Azerbaijani")
+        if re.search(ENGLISH_PATTERN, text, re.IGNORECASE):
+            required_languages.append("English")
+        if re.search(RUSSIAN_PATTERN, text, re.IGNORECASE):
+            required_languages.append("Russian")
+
+        if not required_languages:
+            return None
+
+        return ",".join(required_languages)
+
+    df["required_languages"] = df["description"].apply(
+            _extract_languages_from_description
+        )
+    
+    return df
+
+def extract(save_output: bool = True) -> pd.DataFrame:
+    df = load(CLEAN_DATA)
+    df = extract_experience(df)
+    df = extract_education(df)
+    df = extract_languages(df)
+    
+    if save_output:
+        save(df, FINAL_DATA)
+
+if __name__ == "__main__":
+    extract()

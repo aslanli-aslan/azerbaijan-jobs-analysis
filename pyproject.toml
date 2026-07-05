@@ -19,6 +19,8 @@ lint = "uv run ruff check --fix"
 format = "uv run ruff format"
 precommit = ["lint", "format"]
 scrape = "uv run scraper/scraper.py"
+clean = "uv run src/jobanalysis/clean.py"
+extract = "uv run src/jobanalysis/extract.py"
 
 [tool.setuptools.packages.find]
 where = ["src"]
