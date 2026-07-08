@@ -117,7 +117,7 @@ def normalize_category(df: pd.DataFrame) -> pd.DataFrame:
 def drop_columns(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
-    df = df.drop(columns=["id", "company_id", "url", "fetched_at", "direct_apply"])
+    df = df.drop(columns=["company_id", "url", "fetched_at", "direct_apply"])
 
     return df
 
