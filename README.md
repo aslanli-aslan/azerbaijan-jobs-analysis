@@ -11,7 +11,7 @@ Job seekers don't have a source of truth to understand current market requiremen
 1. **Scrape** - job listings are collected from jobsearch.az on a weekly basis.
 2. **Extract** - an regex based extractor parses each listing to pull structured fields: education level, years of experience required, and required languages.
 3. **Store** - extracted data is loaded into a SQL database using SQLite for querying and aggregation.
-4. **Visualize** - aggregated data is published to a [Tableau Dashboard](https://public.tableau.com/app/profile/aslan.aslanl./viz/AzerbaijanJobMarketAnalysis/Dashboard1) for exploration.
+4. **Visualize** - aggregated data is published to a [Tableau Dashboard](https://public.tableau.com/app/profile/aslan.aslanl./viz/AzerbaijanJobMarketAnalysis/Dashboard) for exploration.
 
 ## Data
 
@@ -21,7 +21,7 @@ Job seekers don't have a source of truth to understand current market requiremen
 
 ## Insights
 
-Please visit the [Tableau Dashboard](https://public.tableau.com/app/profile/aslan.aslanl./viz/AzerbaijanJobMarketAnalysis/Dashboard1) to explore the results interactively.
+Please visit the [Tableau Dashboard](https://public.tableau.com/app/profile/aslan.aslanl./viz/AzerbaijanJobMarketAnalysis/Dashboard) to explore the results interactively.
 
 ![Dashboard preview](docs/Dashboard.png)
 
